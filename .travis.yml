@@ -4,3 +4,5 @@ branches:
     - develop
 deploy:
     provider: heroku
+  api_key:
+    secure: echo $secure
