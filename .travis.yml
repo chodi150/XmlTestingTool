@@ -1,7 +1,4 @@
 language: java
-branches:
-  only:
-  - develop
 deploy:
   provider: heroku
   api_key:
