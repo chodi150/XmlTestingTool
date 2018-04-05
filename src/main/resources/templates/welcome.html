@@ -19,17 +19,8 @@
     <div class="starter-template">
         <h1>Our app</h1>
         <h2>
-            <span>These persons are stupid:</span>
+            <span th:text="'Message: ' + ${message}"></span>
         </h2>
-        <tbody>
-        <!--/*@thymesVar id="students" type="com.example.projektpik.Student"*/-->
-        <tr th:switch="${student.sex}" th:each="student: ${students}">
-            <td th:text="${student.name}"/>
-            <span th:case="'M'" th:text="Male" />
-            <td th:text="${student.surname}"/>
-            <span th:case="'F'" th:text="Female" />
-        </tr>
-        </tbody>
     </div>
 
 </div>
