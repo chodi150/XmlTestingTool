@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Handling forms - test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+    <body>
+        <h1>Result</h1>
+        <p th:text="'Name: ' + ${student.name}" />
+        <p th:text="'Surname: ' + ${student.surname}" />
+        <a href="/test">Submit another form</a>
+    </body>
+</html>
