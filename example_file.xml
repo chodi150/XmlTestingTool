@@ -2,7 +2,7 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<CstmrCdtTrfInitn>
 		<GrpHdr>
-			<MsgId>"${pinfo['test']}"</MsgId>
+			<MsgId>CGI.ONEXML.MID.2CST.3TIP.001</MsgId>
 			<CreDtTm>2015-11-16T12:01:22</CreDtTm>
 			<NbOfTxs>5</NbOfTxs>
 			<InitgPty>
@@ -232,7 +232,7 @@
 							<Id>110154</Id>
 						</Othr>
 					</Id>
-				</CdtrAcct>				
+				</CdtrAcct>
 				<RmtInf>
 					<Ustrd>URI.2SCT.3TIP.001.02.03</Ustrd>
 				</RmtInf>
