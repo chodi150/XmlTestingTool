@@ -1,42 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Spring Boot Thymeleaf Hello World Example</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" th:href="@{/css/main.css}"
-          href="../../css/main.css" />
-
-</head>
-<body>
-
-
-<div class="container">
-
-    <div class="starter-template">
-        <h1>Our app</h1>
-        <h2>
-            <span>These persons are stupid:</span>
-        </h2>
-        <tbody>
-        <!--/*@thymesVar id="students" type="com.example.projektpik.Student"*/-->
-        <tr th:switch="${student.sex}" th:each="student: ${students}">
-            <td th:text="${student.name}"/>
-            <span th:case="'M'" th:text="Male" />
-            <td th:text="${student.surname}"/>
-            <span th:case="'F'" th:text="Female" />
-        </tr>
-        </tbody>
-    </div>
-
-</div>
-<!-- /.container -->
-
-<script type="text/javascript"
-        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</body>
+    <head>
+        <title>Handling forms - test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>Form</h1>
+        <form action="#" th:action="@{/test}" th:object="${student}" method="post">
+            <p>Name: <input type="text" th:field="*{name}" /></p>
+            <p>Surname: <input type="text" th:field="*{surname}" /></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </body>
 </html>
