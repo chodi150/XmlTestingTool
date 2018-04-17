@@ -6,13 +6,12 @@ import java.io.Serializable;
 import java.util.List;
 
 
-@Data
 public class Student implements Serializable
 {
-    private String name;
-    private String surname;
-    private List<String> hobbies;
-    private String sex;
+    public String name;
+    public String surname;
+    public List<String> hobbies;
+    public String sex;
 
     public String getName() {
         return name;
