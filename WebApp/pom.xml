@@ -46,8 +46,13 @@
 			<version>1.16.20</version>
 			<scope>provided</scope>
 		</dependency>
+        <dependency>
+            <groupId>XMLTestingTool</groupId>
+            <artifactId>XMLTestingTool</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
