@@ -18,8 +18,8 @@
     <!--</properties>-->
 
     <modules>
-        <module>WebApp</module>
         <module>XMLTestingTool</module>
+        <module>WebApp</module>
     </modules>
 
 </project>
