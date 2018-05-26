@@ -1,18 +1,24 @@
 package com.example.projektpik.controllers;
 
+import business.XMLValidator;
 import com.example.projektpik.domain.XmlDocument;
 import com.example.projektpik.database.XmlDocumentRepository;
 import com.example.projektpik.domain.XmlDocumentCreator;
 import com.example.projektpik.dto.XmlDocumentDTO;
 import com.example.projektpik.exception.NoSuchXmlException;
 import com.example.projektpik.models.Student;
+import com.example.projektpik.utils.TempFileCreator;
+import exception.XmlValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +32,22 @@ public class WelcomeController {
     @Autowired
     XmlDocumentCreator xmlDocumentCreator;
 
+    XMLValidator xmlValidator = new XMLValidator();
+
     @RequestMapping(value = "/saveXml", method = RequestMethod.POST, consumes = MediaType.TEXT_XML_VALUE)
-    public void saveXml(@RequestBody String xml){
+    public ResponseEntity<Void> saveXml(@RequestBody String xml){
+
+        try {
+            File tempFile = TempFileCreator.createTempFile(xml);
+            if(!xmlValidator.hasXmlValidMarkups(tempFile))
+                return ResponseEntity.status(500).build();
+        } catch (XmlValidationException | IOException e) {
+            return ResponseEntity.status(500).build();
+        }
         XmlDocumentDTO xmlDocumentDTO = XmlDocumentDTO.builder().xmlBody(xml).build();
         xmlDocumentRepository.save(xmlDocumentCreator.from(xmlDocumentDTO));
+
+        return ResponseEntity.status(200).build();
     }
 
     @RequestMapping(value = "/updateOrInsertXml/{id}", method = RequestMethod.POST, consumes = MediaType.TEXT_XML_VALUE)

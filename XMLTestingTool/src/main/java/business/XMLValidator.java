@@ -38,7 +38,7 @@ public class XMLValidator {
             throw new XmlValidationException("Provlems while comparing files", e );
         }
     }
-    boolean hasXmlValidMarkups(File xmlFile) throws XmlValidationException {
+    public boolean hasXmlValidMarkups(File xmlFile) throws XmlValidationException {
         try {
             validateMarkups(xmlFile);
         } catch (NotValidXmlException e) {
