@@ -34,6 +34,17 @@ public class WelcomeController {
 
     XMLValidator xmlValidator = new XMLValidator();
 
+    @RequestMapping(value = "/deleteXml/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Void> deleteXml(@PathVariable Long id){
+        try {
+            xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such elment in repository")).dto();
+        } catch (NoSuchXmlException e) {
+            return ResponseEntity.notFound().build();
+        }
+        xmlDocumentRepository.deleteById(id);
+        return ResponseEntity.status(200).build();
+    }
+
     @RequestMapping(value = "/saveXml", method = RequestMethod.POST, consumes = MediaType.TEXT_XML_VALUE)
     public ResponseEntity<Void> saveXml(@RequestBody String xml){
 
