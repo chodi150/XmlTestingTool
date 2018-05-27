@@ -2,7 +2,6 @@ package business;
 
 import exception.XmlValidationException;
 import org.assertj.core.api.AbstractAssert;
-import org.custommonkey.xmlunit.XMLTestCase;
 
 import java.io.File;
 
@@ -41,11 +40,13 @@ public class XmlAssert extends AbstractAssert<XmlAssert, File>{
 
     public XmlAssert isValidAgainstInputFile(File inputFile) {
         try {
-            if(!xmlValidator.isXmlValidAgainstCorrectFile(inputFile, this.actual))
+            if(!xmlValidator.isXmlFileValidAgainstCorrectFile(inputFile, this.actual))
                 failWithMessage("Given xml is not valid against input file!");
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }
         return this;
     }
+
+
 }

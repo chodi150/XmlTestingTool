@@ -18,10 +18,11 @@ import java.io.IOException;
 @Data
 public class XMLFile {
     File xmlFile;
+    Document document;
 
     public XMLFile(String filename) throws NotValidXmlException, ParserConfigurationException, IOException, SAXException {
         DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         this.xmlFile = new File(filename);
-        Document document = parser.parse(this.xmlFile);
+         document = parser.parse(this.xmlFile);
     }
 }

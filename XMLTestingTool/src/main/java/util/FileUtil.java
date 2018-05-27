@@ -12,7 +12,7 @@ public class FileUtil {
     }
 
     public static void saveFile(String filename, String content) throws IOException {
-        File file = new File( filename );
+        File file = new File(filename );
         FileWriter fw = new FileWriter(file);
         fw.write(content);
         fw.close();

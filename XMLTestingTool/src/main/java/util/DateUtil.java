@@ -10,7 +10,7 @@ import java.util.Calendar;
 public class DateUtil {
 
     public static String getCurrentDate(){
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh-mm-ss"));
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-kk-mm"));
     }
 
 }

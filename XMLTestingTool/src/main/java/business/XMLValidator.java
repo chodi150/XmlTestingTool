@@ -43,7 +43,7 @@ public class XMLValidator {
         }
         return true;
     }
-    boolean isXmlValidAgainstCorrectFile(File correctFile, File xmlFile) throws XmlValidationException {
+    boolean isXmlFileValidAgainstCorrectFile(File correctFile, File xmlFile) throws XmlValidationException {
         try {
             String file1 = readFile(correctFile.toString(), StandardCharsets.UTF_8);
             String file2 = readFile(xmlFile.toString(), StandardCharsets.UTF_8);
@@ -53,6 +53,17 @@ public class XMLValidator {
             throw new XmlValidationException("Problems while comparing files", e );
         }
     }
+
+    boolean isXmlStringValidAgainstCorrectXmlString(String xml1, String xml2) throws XmlValidationException {
+        XMLUnit.setIgnoreWhitespace(true);
+        try {
+            return XMLUnit.compareXML(xml1,xml2).identical();
+        } catch (SAXException | IOException e) {
+            throw new XmlValidationException("Problems while comparing files", e );
+        }
+    }
+
+
     public boolean hasXmlValidMarkups(File xmlFile) throws XmlValidationException {
         try {
 

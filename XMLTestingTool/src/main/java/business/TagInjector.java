@@ -2,6 +2,7 @@ package business;
 
 import exception.NotValidXmlException;
 import org.springframework.context.ApplicationContext;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import util.DateUtil;
@@ -17,16 +18,21 @@ import java.util.Map;
  * Created by Piotr on 19.05.2018.
  */
 public class TagInjector {
-    private SpringTemplateEngine templateEngine;
+    private TemplateEngine templateEngine;
 
-    public TagInjector(SpringTemplateEngine templateEngine){
+    public TagInjector(TemplateEngine templateEngine){
         this.templateEngine = templateEngine;
     }
-    public void produceXmlWithInjectedTags(Map<String, Object> valuesMap, String templateFilename) throws IOException {
+
+    public void produceXmlWithInjectedTags(Map<String, Object> valuesMap, String templateFilename, String outputPath) throws IOException {
 
         Context context = new Context(null, valuesMap);
         String content = templateEngine.process(templateFilename + ".xml", context);
-        FileUtil.saveFile(templateFilename + DateUtil.getCurrentDate() + ".xml", content);
+        FileUtil.saveFile(outputPath+templateFilename + DateUtil.getCurrentDate() + ".xml", content);
+    }
 
+    public String produceStringXmlWithInjectedTags(Map<String, Object> valuesMap, String templateFilename){
+        Context context = new Context(null, valuesMap);
+        return templateEngine.process(templateFilename + ".xml", context);
     }
 }
