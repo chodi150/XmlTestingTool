@@ -1,6 +1,7 @@
 <note>
-    <to th:text="${name}">Tove</to>
-    <from th:text="${surname}">Jani</from>
+    <to>DUPA</to>
+    <from>KUPA</from>
+
     <heading>Reminder</heading>
     <body>Don't forget me this weekend!</body>
 </note>
