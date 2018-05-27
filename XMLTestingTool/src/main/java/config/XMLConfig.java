@@ -22,9 +22,11 @@ public class XMLConfig
 
         return templateResolver;
     }
+
     public SpringTemplateEngine templateEngine(ApplicationContext appCtx) {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(xmlTemplateResolver(appCtx));
         return templateEngine;
     }
+
 }

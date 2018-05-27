@@ -70,7 +70,7 @@ public class WelcomeController {
     public ResponseEntity<String> getXml(@PathVariable Long id){
         XmlDocumentDTO xmlDocumentDTO = null;
         try {
-            xmlDocumentDTO = xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such elment in repository")).dto();
+            xmlDocumentDTO = xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such element in repository")).dto();
         } catch (NoSuchXmlException e) {
            return ResponseEntity.notFound().build();
         }
@@ -81,7 +81,7 @@ public class WelcomeController {
     public String getXmlEditable(@PathVariable Long id, Model model){
         XmlDocumentDTO xmlDocumentDTO = null;
         try {
-            xmlDocumentDTO = xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such elment in repository")).dto();
+            xmlDocumentDTO = xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such element in repository")).dto();
         } catch (NoSuchXmlException e) {
             return "editXml";
         }

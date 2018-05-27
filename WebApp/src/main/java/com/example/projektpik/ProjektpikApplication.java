@@ -6,6 +6,7 @@ import config.XMLConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.thymeleaf.context.Context;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -20,16 +21,12 @@ public class ProjektpikApplication {
 		XMLConfig xmlConfig = new XMLConfig();
 		TagInjector thymeleafTagInjector = new TagInjector(xmlConfig.templateEngine(appContext));
 		Map<String, Object> map = new TreeMap<>();
-		Student student = new Student();
-		student.setName("Kobe");
-		student.setSurname("Bryant");
-		map.put("student",student);
-
+		map.put("student.name","apok");
+		map.put("student.surname", "port");
 		try {
 			thymeleafTagInjector.produceXmlWithInjectedTags(map, "hej");
 		} catch (IOException e) {
 			System.err.println("Houston mamy problem");
 		}
-
 	}
 }

@@ -48,6 +48,23 @@
             <artifactId>assertj-core</artifactId>
             <version>2.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/xmlunit/xmlunit -->
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
 
     </dependencies>
 

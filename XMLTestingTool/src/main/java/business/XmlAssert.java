@@ -2,13 +2,14 @@ package business;
 
 import exception.XmlValidationException;
 import org.assertj.core.api.AbstractAssert;
+import org.custommonkey.xmlunit.XMLTestCase;
 
 import java.io.File;
 
 /**
  * Created by Piotr on 19.05.2018.
  */
-public class XmlAssert extends AbstractAssert<XmlAssert, File> {
+public class XmlAssert extends AbstractAssert<XmlAssert, File>{
     private XMLValidator xmlValidator = new XMLValidator();
     public XmlAssert(File actual) {
         super(actual, XmlAssert.class);
