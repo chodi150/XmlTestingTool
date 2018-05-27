@@ -19,7 +19,7 @@
     function sendPost() {
         $.ajax({
             type: "POST",
-            url: '/updateOrInsertXml/' + document.getElementById("myId").value,
+            url: '/updateXml/' + document.getElementById("myId").value,
             contentType: "text/xml",
             data: document.getElementById("xml").value,
         });
