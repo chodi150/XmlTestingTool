@@ -13,11 +13,11 @@ public class TestingTool {
         TagInjector thymeleafTagInjector = new TagInjector(xmlConfig.templateEngine(""));
         Map<String, Object> map = new TreeMap<>();
         map.put("name","damian");
-        map.put("surname","portasinski");
+        map.put("name2","piotr");
         try {
-            thymeleafTagInjector.produceXmlWithInjectedTags(map, "hej", "XMLTestingTool/");
+            thymeleafTagInjector.produceXmlWithInjectedTags(map, "example_file", "XMLTestingTool/");
         } catch (IOException e) {
-            System.err.println("Houston mamy problem");
+            System.err.println("Error while injecting tags");
         }
     }
 }

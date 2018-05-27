@@ -1,6 +1,6 @@
 <note>
-    <to th:text="${#vars.getVariable('name.x')}">Tove</to>
-    <from th:text="${surname}">Jani</from>
+    <to th:text="${#vars.getVariable('ad1.x')}">Tove</to>
+    <from th:text="${ad2}">Jani</from>
 	<heading>Reminder</heading>
     <body>Don't forget me this weekend!</body>
 </note>

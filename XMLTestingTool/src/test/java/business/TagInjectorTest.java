@@ -18,12 +18,12 @@ public class TagInjectorTest{
     @Test
     public void tagInjectionWithDollarSignWithoutDot() {
         Map<String, Object> map = new TreeMap<>();
-        map.put("name","damian");
-        map.put("surname","portasinski");
+        map.put("ad1","Kevin");
+        map.put("ad2","Lars");
         String content = thymeleafTagInjector.produceStringXmlWithInjectedTags(map,"testfile1");
         XmlStringAssert.assertThat(content).isStringXmlValidAgainstStringXml("<note>\n" +
-                "    <to>damian</to>\n" +
-                "    <from>portasinski</from>\n" +
+                "    <to>Kevin</to>\n" +
+                "    <from>Lars</from>\n" +
                 "\t<heading>Reminder</heading>\n" +
                 "    <body>Don't forget me this weekend!</body>\n" +
                 "</note>");
@@ -32,12 +32,12 @@ public class TagInjectorTest{
     @Test
     public void tagInjectionWithDollarSignWithDot() {
         Map<String, Object> map = new TreeMap<>();
-        map.put("name.x","damian");
-        map.put("surname","portasinski");
+        map.put("ad1.x","Kevin");
+        map.put("ad2","Lars");
         String content = thymeleafTagInjector.produceStringXmlWithInjectedTags(map,"testfile2");
         XmlStringAssert.assertThat(content).isStringXmlValidAgainstStringXml("<note>\n" +
-                "    <to>damian</to>\n" +
-                "    <from>portasinski</from>\n" +
+                "    <to>Kevin</to>\n" +
+                "    <from>Lars</from>\n" +
                 "\t<heading>Reminder</heading>\n" +
                 "    <body>Don't forget me this weekend!</body>\n" +
                 "</note>");
