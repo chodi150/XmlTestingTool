@@ -15,4 +15,12 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class  XmlDocumentDTO {
     private String xmlBody;
+
+    public XmlDocumentDTO() {
+        this.xmlBody = "";
+    }
+
+    public XmlDocumentDTO(String xmlBody) {
+        this.xmlBody = xmlBody;
+    }
 }

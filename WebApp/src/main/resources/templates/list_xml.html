@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/head :: head"></div>
+</head>
+<body id="page-top">
+<div th:replace="fragments/header :: header"></div>
+
+    <div class="container" style="margin-top: 100px;">
+        </br>
+        </br>
+        <h1 class="text-center text-uppercase text-secondary mb-0">XML List</h1>
+        </br>
+        <table class="table text-white picker">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Content</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="xml : ${allXmls}">
+                    <tr th:onclick="'myhref(\'' + '/xml/' + ${xml.id} + '/edit/' + '\');'">
+                        <td th:text="${xml.id}"></td>
+                        <td th:text="${xml.xmlBody}"></td>
+                    </tr>
+            </th:block>
+            </tbody>
+        </table>
+        </br>
+
+    </div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script type="text/javascript">
+    function myhref(web){
+        window.location.href = web;}
+</script>
+
+</body>
+
+</html>
