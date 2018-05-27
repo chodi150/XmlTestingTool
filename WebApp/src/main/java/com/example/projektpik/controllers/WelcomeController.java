@@ -6,8 +6,10 @@ import com.example.projektpik.database.XmlDocumentRepository;
 import com.example.projektpik.domain.XmlDocumentCreator;
 import com.example.projektpik.dto.XmlDocumentDTO;
 import com.example.projektpik.exception.NoSuchXmlException;
+import com.example.projektpik.facade.XmlDocumentFacade;
 import com.example.projektpik.models.Student;
 import com.example.projektpik.utils.TempFileCreator;
+import exception.NotValidXmlException;
 import exception.XmlValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -27,61 +29,60 @@ import java.util.stream.Collectors;
 public class WelcomeController {
 
     @Autowired
-    XmlDocumentRepository xmlDocumentRepository;
-
-    @Autowired
-    XmlDocumentCreator xmlDocumentCreator;
-
-    XMLValidator xmlValidator = new XMLValidator();
+    XmlDocumentFacade xmlDocumentFacade;
 
     @RequestMapping(value = "/deleteXml/{id}", method = RequestMethod.POST)
     public ResponseEntity<Void> deleteXml(@PathVariable Long id){
         try {
-            xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such elment in repository")).dto();
+            xmlDocumentFacade.deleteXml(id);
         } catch (NoSuchXmlException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(400).build();
         }
-        xmlDocumentRepository.deleteById(id);
         return ResponseEntity.status(200).build();
     }
 
     @RequestMapping(value = "/saveXml", method = RequestMethod.POST, consumes = MediaType.TEXT_XML_VALUE)
     public ResponseEntity<Void> saveXml(@RequestBody String xml){
-
         try {
-            File tempFile = TempFileCreator.createTempFile(xml);
-            if(!xmlValidator.hasXmlValidMarkups(tempFile))
-                return ResponseEntity.status(500).build();
-        } catch (XmlValidationException | IOException e) {
+            xmlDocumentFacade.validateXml(xml);
+        } catch (NotValidXmlException e) {
+            return ResponseEntity.status(400).build();
+        } catch (XmlValidationException e) {
             return ResponseEntity.status(500).build();
         }
-        XmlDocumentDTO xmlDocumentDTO = XmlDocumentDTO.builder().xmlBody(xml).build();
-        xmlDocumentRepository.save(xmlDocumentCreator.from(xmlDocumentDTO));
-
+        xmlDocumentFacade.saveXml(xml);
         return ResponseEntity.status(200).build();
     }
 
-    @RequestMapping(value = "/updateOrInsertXml/{id}", method = RequestMethod.POST, consumes = MediaType.TEXT_XML_VALUE)
-    public void updateOrInsertXml(@PathVariable Long id, @RequestBody String xml){
-        xmlDocumentRepository.save(XmlDocument.builder().id(id).xmlBody(xml).build());
+    @RequestMapping(value = "/updateXml/{id}", method = RequestMethod.POST, consumes = MediaType.TEXT_XML_VALUE)
+    public ResponseEntity<Void> updateOrInsertXml(@PathVariable Long id, @RequestBody String xml){
+        try {
+            xmlDocumentFacade.validateXml(xml);
+        } catch (NotValidXmlException e) {
+            return ResponseEntity.status(400).build();
+        } catch (XmlValidationException e) {
+            return ResponseEntity.status(500).build();
+        }
+        xmlDocumentFacade.updateXml(xml, id);
+        return ResponseEntity.status(200).build();
     }
 
     @RequestMapping(value = "/getXml/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_XML_VALUE)
     public ResponseEntity<String> getXml(@PathVariable Long id){
-        XmlDocumentDTO xmlDocumentDTO = null;
+        XmlDocumentDTO xmlDocumentDTO;
         try {
-            xmlDocumentDTO = xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such element in repository")).dto();
+            xmlDocumentDTO = xmlDocumentFacade.getXmlById(id);
         } catch (NoSuchXmlException e) {
-           return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(xmlDocumentDTO.getXmlBody());
     }
 
     @RequestMapping(value = "/getXmlEditable/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_XML_VALUE)
     public String getXmlEditable(@PathVariable Long id, Model model){
-        XmlDocumentDTO xmlDocumentDTO = null;
+        XmlDocumentDTO xmlDocumentDTO;
         try {
-            xmlDocumentDTO = xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such element in repository")).dto();
+            xmlDocumentDTO = xmlDocumentFacade.getXmlById(id);
         } catch (NoSuchXmlException e) {
             return "editXml";
         }
@@ -92,26 +93,19 @@ public class WelcomeController {
 
     @RequestMapping(value = "/getXml", method = RequestMethod.GET, produces = MediaType.TEXT_XML_VALUE)
     public ResponseEntity<String> getXml(){
-        String xmls =  xmlDocumentRepository.findAll()
-                .stream()
-                .map(XmlDocument::dto)
-                .map(XmlDocumentDTO::getXmlBody)
-                .collect(Collectors.joining("\n"));
-        if (xmls == null){
+        String allXmls;
+        try {
+            allXmls = xmlDocumentFacade.getAllXmls();
+        } catch (NoSuchXmlException e) {
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok("<xmldocuments>\n" + xmls + "\n</xmldocuments>");
+        return ResponseEntity.ok("<xmldocuments>\n" + allXmls + "\n</xmldocuments>");
     }
 
     @GetMapping("/test")
     public String welcomeForm(Model model) {
         Student student = new Student();
         model.addAttribute("student", student);
-        XmlDocument xmlDocument = new XmlDocument();
-//        xmlDocument.setId(1L);
-        xmlDocument.setXmlBody("SIema");
-        xmlDocumentRepository.save(xmlDocument);
         return "welcome";
     }
 
