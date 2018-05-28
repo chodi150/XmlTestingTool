@@ -1,5 +1,6 @@
 package com.example.projektpik;
 
+import business.TagInjector;
 import business.XmlAssert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,27 +17,27 @@ public class ProjektpikApplicationTests {
 	File file;
 	@Before
 	public void setup(){
-		file = new File("hej10-36-24.xml");
+		file = new File("testFiles/testfile3.xml");
 	}
 
 
 	@Test
-	public void funnyTest() {
-		file = new File("hej10-36-24.xml");
+	public void checkValidMarkups() {
+		file = new File("testFiles/testfile3.xml");
 		XmlAssert.assertThat(file).hasValidMarkups();
 	}
 
 	@Test
-	public void funnierTest() {
-		file = new File("hej10-36-24.xml");
-		File scheme = new File("scheme.xsd");
+	public void checkAgainsXsdScheme() {
+		file = new File("testFiles/testfile3.xml");
+		File scheme = new File("testFiles/scheme_testfile3.xsd");
 		XmlAssert.assertThat(file).isValidAgainstXsd(scheme);
 	}
 
 	@Test
-	public void theFunniestTest() {
-		File hej1 = new File("hej1.xml");
-		File hej2 = new File("hej2.xml");
+	public void checkIfTwoFilesWithWhitespacesAreEqual() {
+		File hej1 = new File("testFiles/testfile1.xml");
+		File hej2 = new File("testFiles/testfile2.xml");
 		XmlAssert.assertThat(hej1).isValidAgainstInputFile(hej2);
 	}
 
