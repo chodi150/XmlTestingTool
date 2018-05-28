@@ -4,6 +4,7 @@ import exception.NotValidXmlException;
 import exception.XmlValidationException;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -16,6 +17,10 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -66,7 +71,6 @@ public class XMLValidator {
 
     public boolean hasXmlValidMarkups(File xmlFile) throws XmlValidationException {
         try {
-
             validateMarkups(xmlFile);
         } catch (NotValidXmlException e) {
             return false;
@@ -109,8 +113,17 @@ public class XMLValidator {
         }
     }
 
-
-
-
+    public String getValueOfXpathTag(File file, String path) throws XmlValidationException {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(file);
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            Node node =  (Node)xPath.evaluate(path, document, XPathConstants.NODE);
+            return node.getTextContent();
+        } catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
+            throw new XmlValidationException("Problems with parsing xml", e);
+        }
+    }
 
 }

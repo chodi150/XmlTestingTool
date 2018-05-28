@@ -13,13 +13,12 @@ public class XmlStringAssert extends AbstractAssert<XmlStringAssert, String> {
         return new XmlStringAssert(xml);
     }
 
-    public XmlStringAssert isStringXmlValidAgainstStringXml(String xml) {
+    public void isStringXmlValidAgainstStringXml(String xml) {
         try {
             if(!xmlValidator.isXmlStringValidAgainstCorrectXmlString(xml, this.actual))
                 failWithMessage("\nExpected:\n"+xml+"\nActual:\n"+this.actual);
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }
-        return this;
     }
 }

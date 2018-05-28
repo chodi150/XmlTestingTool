@@ -18,35 +18,41 @@ public class XmlAssert extends AbstractAssert<XmlAssert, File>{
         return new XmlAssert(file);
     }
 
-    public XmlAssert hasValidMarkups() {
+    public void hasValidMarkups() {
         try {
             if(!xmlValidator.hasXmlValidMarkups(this.actual))
                 failWithMessage("Given xml is not valid!");
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }
-        return this;
     }
 
-    public XmlAssert isValidAgainstXsd(File xsdScheme) {
+    public void isValidAgainstXsd(File xsdScheme) {
         try {
             if(!xmlValidator.isXmlValidAgainstXsdScheme(xsdScheme, this.actual))
                 failWithMessage("Given xml is not valid against xsd scheme!");
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }
-        return this;
     }
 
-    public XmlAssert isValidAgainstInputFile(File inputFile) {
+    public void isValidAgainstInputFile(File inputFile) {
         try {
             if(!xmlValidator.isXmlFileValidAgainstCorrectFile(inputFile, this.actual))
                 failWithMessage("Given xml is not valid against input file!");
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }
-        return this;
     }
 
+    public void xPathTagHasGivenValue(String xpath, String value) {
+        try{
+            if(!value.equals(xmlValidator.getValueOfXpathTag(this.actual, xpath))){
+                failWithMessage("\nExpected:\n"+value+"\nActual:\n"+xmlValidator.getValueOfXpathTag(this.actual, xpath));
+            }
+        } catch (XmlValidationException e) {
+            failWithMessage("Exception while executing test!");
+        }
+    }
 
 }

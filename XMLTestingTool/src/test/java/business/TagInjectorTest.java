@@ -2,16 +2,12 @@ package business;
 
 import config.XMLConfig;
 import model.Student;
-import org.custommonkey.xmlunit.XMLTestCase;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
-
-import static org.junit.Assert.*;
 
 public class TagInjectorTest{
     XMLConfig xmlConfig = new XMLConfig();
@@ -79,5 +75,11 @@ public class TagInjectorTest{
         File hej1 = new File("src/test/testfiles/testfile4.xml");
         File hej2 = new File("src/test/testfiles/testfile5.xml");
         XmlAssert.assertThat(hej1).isValidAgainstInputFile(hej2);
+    }
+
+    @Test
+    public void checkIfXmlHasCertainValueInTag() {
+        File hej1 = new File("src/test/testfiles/testfile5.xml");
+        XmlAssert.assertThat(hej1).xPathTagHasGivenValue("/note/heading",  "Reminder");
     }
 }
