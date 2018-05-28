@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <div th:replace="fragments/head :: head"></div>
+  </head>
+  <body id="page-top">
+    <div th:replace="fragments/header :: header"></div>
+
+    <!-- Header -->
+      <header class="masthead bg-primary text-white text-center">
+        <div class="container">
+          <img class="img-fluid mb-5 d-block mx-auto" src="/img/profile.png" alt="">
+          <h1 class="text-uppercase mb-0">GoatXML</h1>
+          <h2 class="font-weight-light mb-0">Add - Edit - Have fun</h2>
+        </div>
+      </header>
+
+    <!-- XML Grid Section -->
+    <div sec:authorize="isAuthenticated()">
+      <section class="portfolio" id="portfolio">
+        <div class="container">
+          <h2 class="text-center text-uppercase text-secondary mb-0">XML database</h2>
+          </br>
+          </br>
+          <div class="row">
+            <div class="col-md-6 col-lg-6">
+              <a class="portfolio-item d-block mx-auto" href="/xml/list/">
+                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100" onclick="myhref('xml/list/');">
+                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                    See the list of all available XML files
+                  </div>
+                </div>
+                <img class="img-fluid" src="img/cabin.png" alt="">
+                <h3 class="text-center text-uppercase text-secondary mb-0">Browse</h3>
+              </a>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <a class="portfolio-item d-block mx-auto" href="/xml/new/">
+                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100" onclick="myhref('xml/new/');">
+                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                    Create new XML file
+                  </div>
+                </div>
+                <img class="img-fluid" src="img/cake.png" alt="">
+                <h3 class="text-center text-uppercase text-secondary mb-0">Add new</h3>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+      <!-- Footer -->
+      <footer class="footer text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mb-5 mb-lg-0">
+              <h4 class="text-uppercase mb-4">About</h4>
+              <p class="lead mb-0">Simple app that allows you to insert, edit and browse XML files.
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <div th:replace="fragments/footer :: footer"></div>
+
+    <script type="text/javascript">
+        function myhref(web){
+            window.location.href = web;}
+    </script>
+
+  </body>
+
+</html>

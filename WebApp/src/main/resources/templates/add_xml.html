@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/head :: head"></div>
+</head>
+<body id="page-top">
+<div th:replace="fragments/header :: header"></div>
+
+<header class="masthead bg-primary text-white text-center">
+    <div class="container">
+        <h1 class="text-center text-uppercase text-secondary mb-0">Add XML</h1>
+        <br>
+        <br>
+        <form action="#" th:action="'/xml/new/'" th:object="${xmlDocumentDTO}" method="post">
+            <div th:if="${error}" class="error">
+                <label th:text="'Error: ' + ${error}"></label>
+            </div>
+            <textarea class="xml-body form-control" type="text" th:field="*{xmlBody}"></textarea>
+            <br>
+            <input type="submit" class="btn btn-warning" value="Submit"/>
+        </form>
+    </div>
+</header>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+
+</body>
+
+</html>

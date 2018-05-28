@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example </title>
+    <div th:replace="fragments/head :: head"></div>
 </head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+<body id="page-top">
+<div th:replace="fragments/header :: header"></div>
+
+<header class="masthead bg-primary text-white text-center">
+    <div class="container">
+        <img class="img-fluid mb-5 d-block mx-auto" style="padding-bottom:-40px;" src="/img/safe.png" alt="">
+        </br>
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <form th:action="@{/login}" method="post">
+            <h1 class="text-center text-uppercase text-secondary mb-0" style="margin-top:-30px;">Login</h1>
+            <br>
+            <div style="width: 20%; margin: 0 auto !important; float: none !important;">
+                <input type="text" name="username" class="form-control" placeholder="username" style="margin-top:10px;"/>
+                <input type="password" name="password" class="form-control" placeholder="password" style="margin-top:10px;"/>
+                <input type="submit" value="login" class="btn btn-warning text-white" style="margin-top:10px;">
+            </div>
+        </form>
+    </div>
+</header>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+
 </body>
+
 </html>
+

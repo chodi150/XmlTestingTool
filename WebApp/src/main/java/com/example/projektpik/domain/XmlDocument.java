@@ -22,7 +22,7 @@ import java.sql.Clob;
 public class XmlDocument
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long id;
 
     String xmlBody;

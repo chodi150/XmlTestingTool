@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -63,16 +64,8 @@ public class XmlDocumentFacade {
         return xmlDocumentRepository.findById(id).orElseThrow(()-> new NoSuchXmlException("No such elment in repository")).dto();
     }
 
-    public String getAllXmls() throws NoSuchXmlException {
-        String xmls =  xmlDocumentRepository.findAll()
-                .stream()
-                .map(XmlDocument::dto)
-                .map(XmlDocumentDTO::getXmlBody)
-                .collect(Collectors.joining("\n"));
-        if (xmls == null){
-            throw new NoSuchXmlException("No xmls in database");
-        }
-        return xmls;
+    public ArrayList<XmlDocument> getAllXmls() {
+        return new ArrayList<>(xmlDocumentRepository.findAll());
     }
 
 }
