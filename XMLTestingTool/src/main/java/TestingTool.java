@@ -1,5 +1,6 @@
 import business.TagInjector;
 import config.XMLConfig;
+import model.Student;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,8 +13,10 @@ public class TestingTool {
         XMLConfig xmlConfig = new XMLConfig();
         TagInjector thymeleafTagInjector = new TagInjector(xmlConfig.templateEngine(""));
         Map<String, Object> map = new TreeMap<>();
-        map.put("name","damian");
-        map.put("name2","piotr");
+        Student student = new Student();
+        student.setName("Damian");
+        student.setSurname("Portasinski");
+        map.put("student",student);
         try {
             thymeleafTagInjector.produceXmlWithInjectedTags(map, "example_file", "XMLTestingTool/");
         } catch (IOException e) {

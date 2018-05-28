@@ -1,6 +1,7 @@
 package business;
 
 import config.XMLConfig;
+import model.Student;
 import org.custommonkey.xmlunit.XMLTestCase;
 import org.junit.Test;
 
@@ -15,6 +16,22 @@ import static org.junit.Assert.*;
 public class TagInjectorTest{
     XMLConfig xmlConfig = new XMLConfig();
     TagInjector thymeleafTagInjector = new TagInjector(xmlConfig.templateEngine(""));
+
+    @Test
+    public void tagInjectionWithObjects() {
+        Map<String, Object> map = new TreeMap<>();
+        Student student = new Student();
+        student.setSurname("Portasinski");
+        student.setName("Damian");
+        map.put("student", student);
+        String content = thymeleafTagInjector.produceStringXmlWithInjectedTags(map,"testfile6");
+        XmlStringAssert.assertThat(content).isStringXmlValidAgainstStringXml("<Student>\n" +
+                "    <name>Damian</name>\n" +
+                "    <surname>Portasinski</surname>\n" +
+                "</Student>");
+    }
+
+
     @Test
     public void tagInjectionWithDollarSignWithoutDot() {
         Map<String, Object> map = new TreeMap<>();

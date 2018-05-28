@@ -29,13 +29,13 @@ public class MainController {
     XmlDocumentFacade xmlDocumentFacade;
 
     @RequestMapping(value = "/xml/{id}/delete/", method = RequestMethod.POST)
-    public ResponseEntity<Void> deleteXml(@PathVariable Long id) {
+    public String deleteXml(@PathVariable Long id) {
         try {
             xmlDocumentFacade.deleteXml(id);
         } catch (NoSuchXmlException e) {
-            return ResponseEntity.status(400).build();
+            return "redirect:/xml/list/";
         }
-        return ResponseEntity.status(200).build();
+        return "redirect:/xml/list/";
     }
 
     @GetMapping(value = "/xml/new/", produces = MediaType.TEXT_XML_VALUE)
