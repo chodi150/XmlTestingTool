@@ -24,11 +24,11 @@ public class TagInjector {
         this.templateEngine = templateEngine;
     }
 
-    public void produceXmlWithInjectedTags(Map<String, Object> valuesMap, String templateFilename, String outputPath) throws IOException {
+    public void produceXmlWithInjectedTags(Map<String, Object> valuesMap, String templateFilename, String outputFile) throws IOException {
 
         Context context = new Context(null, valuesMap);
         String content = templateEngine.process(templateFilename + ".xml", context);
-        FileUtil.saveFile(outputPath+templateFilename + DateUtil.getCurrentDate() + ".xml", content);
+        FileUtil.saveFile(outputFile + ".xml", content);
     }
 
     public String produceStringXmlWithInjectedTags(Map<String, Object> valuesMap, String templateFilename){

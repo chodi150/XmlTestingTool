@@ -33,11 +33,19 @@ import java.nio.file.Paths;
  */
 public class XMLValidator {
 
-    private static String readFile(String path, Charset encoding)
+    private static String readFile(String path)
             throws IOException
     {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
+        return new String(encoded, StandardCharsets.UTF_8);
+    }
+
+    public String fileToString(File file) throws XmlValidationException {
+        try {
+            return readFile(file.toString());
+        } catch (IOException e) {
+            throw new XmlValidationException("Problems while comparing files",e);
+        }
     }
 
     boolean isXmlValidAgainstXsdScheme(File scheme, File xmlFile) throws XmlValidationException {
@@ -50,8 +58,8 @@ public class XMLValidator {
     }
     boolean isXmlFileValidAgainstCorrectFile(File correctFile, File xmlFile) throws XmlValidationException {
         try {
-            String file1 = readFile(correctFile.toString(), StandardCharsets.UTF_8);
-            String file2 = readFile(xmlFile.toString(), StandardCharsets.UTF_8);
+            String file1 = readFile(correctFile.toString());
+            String file2 = readFile(xmlFile.toString());
             XMLUnit.setIgnoreWhitespace(true);
             return XMLUnit.compareXML(file1, file2).identical();
         } catch (IOException | SAXException e) {

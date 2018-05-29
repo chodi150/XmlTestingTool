@@ -14,7 +14,32 @@ public class TagInjectorTest{
     TagInjector thymeleafTagInjector = new TagInjector(xmlConfig.templateEngine(""));
 
     @Test
-    public void tagInjectionWithObjects() {
+    public void tagInjectionWithObjectsFiles() throws IOException {
+        Map<String, Object> map = new TreeMap<>();
+        Student x = new Student();
+        x.setSurname("Potter");
+        x.setName("Harry");
+        map.put("x", x);
+        File f1 = new File("src/test/testfiles/testfile7_1.xml");
+        thymeleafTagInjector.produceXmlWithInjectedTags(map,"testfile7_2","src/test/testfiles/testfile7_3");
+        File f2 = new File("src/test/testfiles/testfile7_3.xml");
+        XmlAssert.assertThat(f1).isValidAgainstInputFile(f2);
+    }
+
+    @Test
+    public void tagInjectionWithDollarSignWithoutDotFiles() throws IOException {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("name", "Ron");
+        map.put("surname", "Weasley");
+        File f1 = new File("src/test/testfiles/testfile8_1.xml");
+        thymeleafTagInjector.produceXmlWithInjectedTags(map,"testfile8_2","src/test/testfiles/testfile8_3");
+        File f2 = new File("src/test/testfiles/testfile8_3.xml");
+        XmlAssert.assertThat(f1).isValidAgainstInputFile(f2);
+    }
+
+
+    @Test
+    public void tagInjectionWithObjectsStrings() {
         Map<String, Object> map = new TreeMap<>();
         Student student = new Student();
         student.setSurname("Portasinski");
@@ -29,7 +54,7 @@ public class TagInjectorTest{
 
 
     @Test
-    public void tagInjectionWithDollarSignWithoutDot() {
+    public void tagInjectionWithDollarSignWithoutDotStrings() {
         Map<String, Object> map = new TreeMap<>();
         map.put("ad1","Kevin");
         map.put("ad2","Lars");
@@ -43,7 +68,7 @@ public class TagInjectorTest{
     }
 
     @Test
-    public void tagInjectionWithDollarSignWithDot() {
+    public void tagInjectionWithDollarSignWithDotStrings() {
         Map<String, Object> map = new TreeMap<>();
         map.put("ad1.x","Kevin");
         map.put("ad2","Lars");
@@ -56,10 +81,29 @@ public class TagInjectorTest{
                 "</note>");
     }
 
+    @Test(expected = AssertionError.class)
+    public void tagInjectionWithDollarSignWithDotStringsShouldFail() {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("ad1.x","Kevin");
+        map.put("ad2","Lars");
+        String content = thymeleafTagInjector.produceStringXmlWithInjectedTags(map,"testfile2");
+        XmlStringAssert.assertThat(content).isStringXmlValidAgainstStringXml("<note>\n" +
+                "    <to>Kevin</to>\n" +
+                "    <from>Lars</from>\n" +
+                "\t<heading>Reeminder</heading>\n" +
+                "    <body>Don't forget me this weekend!</body>\n" +
+                "</note>");
+    }
+
     @Test
     public void checkValidMarkups() throws IOException {
-
         File file = new File("src/test/testfiles/testfile3.xml");
+        XmlAssert.assertThat(file).hasValidMarkups();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void checkNotValidMarkups() throws IOException {
+        File file = new File("src/test/testfiles/testfile9.xml");
         XmlAssert.assertThat(file).hasValidMarkups();
     }
 
@@ -74,6 +118,13 @@ public class TagInjectorTest{
     public void checkIfTwoFilesWithWhitespacesAreEqual() {
         File hej1 = new File("src/test/testfiles/testfile4.xml");
         File hej2 = new File("src/test/testfiles/testfile5.xml");
+        XmlAssert.assertThat(hej1).isValidAgainstInputFile(hej2);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void checkIfTwoFilesWithWhitespacesAreNotEqual() {
+        File hej1 = new File("src/test/testfiles/testfile4.xml");
+        File hej2 = new File("src/test/testfiles/testfile9.xml");
         XmlAssert.assertThat(hej1).isValidAgainstInputFile(hej2);
     }
 

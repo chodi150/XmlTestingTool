@@ -39,7 +39,7 @@ public class XmlAssert extends AbstractAssert<XmlAssert, File>{
     public void isValidAgainstInputFile(File inputFile) {
         try {
             if(!xmlValidator.isXmlFileValidAgainstCorrectFile(inputFile, this.actual))
-                failWithMessage("Given xml is not valid against input file!");
+                failWithMessage("\nExpected:\n"+xmlValidator.fileToString(inputFile)+"\nActual:\n"+xmlValidator.fileToString(this.actual));
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }

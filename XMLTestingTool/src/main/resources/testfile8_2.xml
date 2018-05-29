@@ -1,0 +1,4 @@
+<student>
+    <name th:text="${name}">bla</name>
+    <surname th:text="${surname}">bla</surname>
+</student>
