@@ -2,6 +2,7 @@ package business;
 
 import exception.XmlValidationException;
 import org.assertj.core.api.AbstractAssert;
+import org.custommonkey.xmlunit.DetailedDiff;
 
 public class XmlStringAssert extends AbstractAssert<XmlStringAssert, String> {
     private XMLValidator xmlValidator = new XMLValidator();
@@ -15,8 +16,9 @@ public class XmlStringAssert extends AbstractAssert<XmlStringAssert, String> {
 
     public void isStringXmlValidAgainstStringXml(String xml) {
         try {
-            if(!xmlValidator.isXmlStringValidAgainstCorrectXmlString(xml, this.actual))
-                failWithMessage("\nExpected:\n"+xml+"\nActual:\n"+this.actual);
+            DetailedDiff diff = xmlValidator.compareStringValidAgainstCorrectXmlString(xml, this.actual);
+            if(!diff.identical())
+                failWithMessage(diff.getAllDifferences().toString());
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }

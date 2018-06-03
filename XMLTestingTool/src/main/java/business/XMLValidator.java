@@ -2,6 +2,8 @@ package business;
 
 import exception.NotValidXmlException;
 import exception.XmlValidationException;
+import org.custommonkey.xmlunit.DetailedDiff;
+import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -56,21 +58,21 @@ public class XMLValidator {
         }
         return true;
     }
-    boolean isXmlFileValidAgainstCorrectFile(File correctFile, File xmlFile) throws XmlValidationException {
+    DetailedDiff compareFileValidAgainstCorrectFile(File correctFile, File xmlFile) throws XmlValidationException {
         try {
             String file1 = readFile(correctFile.toString());
             String file2 = readFile(xmlFile.toString());
             XMLUnit.setIgnoreWhitespace(true);
-            return XMLUnit.compareXML(file1, file2).identical();
+            return new DetailedDiff(XMLUnit.compareXML(file1, file2));
         } catch (IOException | SAXException e) {
             throw new XmlValidationException("Problems while comparing files", e );
         }
     }
 
-    boolean isXmlStringValidAgainstCorrectXmlString(String xml1, String xml2) throws XmlValidationException {
+    DetailedDiff compareStringValidAgainstCorrectXmlString(String xml1, String xml2) throws XmlValidationException {
         XMLUnit.setIgnoreWhitespace(true);
         try {
-            return XMLUnit.compareXML(xml1,xml2).identical();
+            return new DetailedDiff(XMLUnit.compareXML(xml1,xml2));
         } catch (SAXException | IOException e) {
             throw new XmlValidationException("Problems while comparing files", e );
         }

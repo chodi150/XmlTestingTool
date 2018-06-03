@@ -2,6 +2,7 @@ package business;
 
 import exception.XmlValidationException;
 import org.assertj.core.api.AbstractAssert;
+import org.custommonkey.xmlunit.DetailedDiff;
 
 import java.io.File;
 
@@ -38,8 +39,9 @@ public class XmlAssert extends AbstractAssert<XmlAssert, File>{
 
     public void isValidAgainstInputFile(File inputFile) {
         try {
-            if(!xmlValidator.isXmlFileValidAgainstCorrectFile(inputFile, this.actual))
-                failWithMessage("\nExpected:\n"+xmlValidator.fileToString(inputFile)+"\nActual:\n"+xmlValidator.fileToString(this.actual));
+            DetailedDiff diff = xmlValidator.compareFileValidAgainstCorrectFile(inputFile, this.actual);
+            if(!diff.identical())
+                failWithMessage(diff.getAllDifferences().toString());
         } catch (XmlValidationException e) {
             failWithMessage("Exception while executing test!");
         }
